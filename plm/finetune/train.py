@@ -14,6 +14,8 @@ KEPT Paper's results on MIMIC-50:
 Reference:
     https://huggingface.co/docs/transformers/training
     https://arxiv.org/pdf/2210.03304v2.pdf (KEPT paper)
+    https://huggingface.co/whaleloops/keptlongformer (KEPT public release)
+    https://huggingface.co/yikuan8/Clinical-Longformer (Clinical Longformer public release)
 
 2022.12.06, JamesH.
 """
