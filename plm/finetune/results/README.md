@@ -22,16 +22,22 @@ Clinical Longformer, token-size=4096:
   eval_micro-f1 0.6754
 # close to paper results (KEPT-Longformer w/o HSAP & Prompt)
 
-
 python train.py yikuan8/Clinical-Longformer --epoch 20 --maxlen 4096 --batchsize 2
-------- Eval Metrics -------
-eval_loss 0.2244482934474945
-eval_macro-f1 0.6172008100512372
-eval_micro-f1 0.6827600285801776
-eval_runtime 133.4915
-eval_samples_per_second 12.952
-eval_steps_per_second 3.244
-epoch 20.0
+-------------------------------------
+"epoch": 10.0,
+"eval_loss": 0.20092199742794037,                                                                         
+"eval_macro-f1": 0.5874442444680102,
+"eval_micro-f1": 0.6768977237614585,
+"step": 20170
+
+python train.py whaleloops/keptlongformer --epoch 10 --maxlen 4096 --batchsize 2
+-------------------------------------
+"epoch": 10.0,
+"eval_loss": 0.20039880275726318,
+"eval_macro-f1": 0.5509869716707443,
+"eval_micro-f1": 0.6616715913887717,
+"eval_runtime": 138.3993,
+"step": 20170
 ```
 
 # MIMIC3-FULL
