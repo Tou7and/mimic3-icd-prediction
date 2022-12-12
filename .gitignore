@@ -1,5 +1,6 @@
-# Ignore experiment files
+# Ignore experiment and deprecated files
 exp/
+deprecated/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
