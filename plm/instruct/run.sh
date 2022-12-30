@@ -14,10 +14,14 @@ python train.py google/t5-v1_1-base --dataset full --epoch 10 --maxlen 1024
 # https://huggingface.co/google/long-t5-tglobal-base
 # https://huggingface.co/google/long-t5-local-base
 # global better than local?
-# python train.py google/long-t5-tglobal-base --dataset full --epoch 10 --maxlen 1024
+# python train_long.py google/long-t5-tglobal-base --dataset full --epoch 10 --maxlen 1024
 
 # 4th
 # Stancld/longt5-tglobal-large-16384-pubmed-3k_steps
 # https://huggingface.co/Stancld/longt5-tglobal-large-16384-pubmed-3k_steps
-# python train.py Stancld/longt5-tglobal-large-16384-pubmed-3k_steps --dataset full --epoch 10 --maxlen 1024
+# python train_long.py Stancld/longt5-tglobal-large-16384-pubmed-3k_steps --dataset full --epoch 10 --maxlen 1024
+
+# 5th
+# google/long-t5-tglobal-large
+# (This is to compare with 4th model)
 
