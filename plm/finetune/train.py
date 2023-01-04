@@ -87,6 +87,7 @@ def main(modelname, dataset, maxlen, batchsize, learnrate, epoch):
         num_train_epochs=epoch, # 2-10
         evaluation_strategy="epoch",
         save_strategy='epoch',
+        save_total_limit=2,
     )
 
     trainer = MultilabelTrainer(

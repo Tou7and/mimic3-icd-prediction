@@ -3,6 +3,7 @@ Test instruction-tuned FLAN-T5 model using MIMIC3-FULL.
 
 2022.12.30, JamesH.
 """
+import os
 import json
 from datasets import load_dataset
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, LongT5ForConditionalGeneration
@@ -47,7 +48,9 @@ def main_full():
     # model = FlanT5ICD("exp/google/flan-t5-base_full", "google/flan-t5-base_full")
     # model = T5ForICD("exp/google/t5-v1_1-base_full", "google/t5-v1_1-base")
     model = LongT5ForICD("exp/google/long-t5-tglobal-base_full", "google/long-t5-tglobal-base")
-    output_path = "exp/results_longt5base/test_full.json"
+    output_dir = "exp/results_longt5base"
+    output_path = os.path.join(output_dir, "test_full.json")
+    os.makedirs(output_dir, exist_ok=True)
 
     print("loading data...")
     test_set = load_dataset(

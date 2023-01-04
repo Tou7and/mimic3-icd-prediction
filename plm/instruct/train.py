@@ -104,8 +104,8 @@ def main(model_id, dataset, maxlen, n_epoch):
     # Define training args
     training_args = Seq2SeqTrainingArguments(
         output_dir=f"exp/{model_id}_{dataset}",
-        per_device_train_batch_size=3,
-        per_device_eval_batch_size=3,
+        per_device_train_batch_size=1, # 3 --> 1
+        per_device_eval_batch_size=1, # 3 --> 1
         predict_with_generate=True,
         fp16=False, # Overflows with fp16
         learning_rate=5e-5,

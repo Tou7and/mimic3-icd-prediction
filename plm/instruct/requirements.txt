@@ -1,5 +1,6 @@
 transformers
 datasets
+evaluate
 rouge-score
 nltk
 scikit-learn
