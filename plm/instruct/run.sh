@@ -6,14 +6,16 @@
 
 # 2nd
 # google/t5-v1_1-base
-python train.py google/t5-v1_1-base --dataset full --epoch 10 --maxlen 1024
+# python train.py google/t5-v1_1-base --dataset full --epoch 10 --maxlen 1024
 
-# TODO: edit training scripts for long-t5 models 
+# TODO: verify if the origin training recipe can work
+# TODO: if not, make special training scripts for long-t5 models 
 # 3rd
 # google/long-t5-tglobal-base
 # https://huggingface.co/google/long-t5-tglobal-base
 # https://huggingface.co/google/long-t5-local-base
 # global better than local?
+python train.py google/long-t5-tglobal-base --dataset full --epoch 10 --maxlen 1024
 # python train_long.py google/long-t5-tglobal-base --dataset full --epoch 10 --maxlen 1024
 
 # 4th

@@ -5,14 +5,16 @@ Test instruction-tuned FLAN-T5 model using MIMIC3-FULL.
 """
 import json
 from datasets import load_dataset
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, LongT5ForConditionalGeneration
 from tqdm import tqdm
+from metrics import get_report
 
+# google/t5-v1_1-base
 # exp/google/flan-t5-base_full
-class FlanT5ICD:
-    def __init__(self, model_path):
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(model_path).to("cuda")
-        self.tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-base")
+class T5ForICD:
+    def __init__(self, model_id, tokenizer_id):
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to("cuda")
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_id)
     
     def predict(self, text, prompt="Translate English to ICD: "):
         input_text = prompt + text
@@ -24,9 +26,28 @@ class FlanT5ICD:
         unique_icds = list(set(icd_codes))
         return unique_icds
 
+class LongT5ForICD:
+    def __init__(self, model_id, tokenizer_id):
+        self.model = LongT5ForConditionalGeneration.from_pretrained(model_id).to("cuda")
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_id)
+    
+    def predict(self, text, prompt="Translate English to ICD: "):
+        input_text = prompt + text
+        input_ids = self.tokenizer(input_text, return_tensors="pt").input_ids.to("cuda")
+
+        sequences = self.model.generate(input_ids, max_length=100) # .sequences
+        summary = self.tokenizer.batch_decode(sequences, skip_special_tokens=True)
+
+        icd_codes = summary[0].strip().split(" ")
+        unique_icds = list(set(icd_codes))
+        return unique_icds
+
 def main_full():
     print("loading model...")
-    model = FlanT5ICD("exp/google/flan-t5-base_full")
+    # model = FlanT5ICD("exp/google/flan-t5-base_full", "google/flan-t5-base_full")
+    # model = T5ForICD("exp/google/t5-v1_1-base_full", "google/t5-v1_1-base")
+    model = LongT5ForICD("exp/google/long-t5-tglobal-base_full", "google/long-t5-tglobal-base")
+    output_path = "exp/results_longt5base/test_full.json"
 
     print("loading data...")
     test_set = load_dataset(
@@ -41,8 +62,11 @@ def main_full():
         results.append({"idx": idx, "refs": example['labels'], "hyps": hyps})
         print("-"*100)
 
-    with open("exp/test_full.json", 'w') as writer:
+    with open(output_path, 'w') as writer:
         json.dump(results, writer, indent=4)
+
+    results = get_report(output_path)
+    return results
 
 def main_50():
     print("loading model...")

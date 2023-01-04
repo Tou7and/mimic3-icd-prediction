@@ -1,3 +1,13 @@
+"""
+Results (FLAN-T5-bese-FULL):
+    {'macro': {'f1': 0.0618, 'precision': 0.0837, 'recall': 0.0617}, 
+    'micro': {'f1': 0.3819, 'precision': 0.5652, 'recall': 0.2884}}
+
+Results (FLAN-T5-base-50):
+    {'macro': {'f1': 0.3634, 'precision': 0.508, 'recall': 0.3339}, 
+    'micro': {'f1': 0.5063, 'precision': 0.6439, 'recall': 0.4172}}
+"""
+import json
 from sklearn.metrics import f1_score, recall_score, precision_score
 from sklearn.preprocessing import MultiLabelBinarizer
 # from pecos.utils import smat_util
@@ -54,6 +64,20 @@ def keep_target_labels(input_list, target_labels):
                 output_labels.append(label)
         output_list.append(output_labels)
     return output_list
+
+def get_report(file_path):
+    with open(file_path, 'r') as reader:
+        info = json.load(reader)
+    ref_list = []
+    hyp_list = []
+    for example in info:
+        ref_list.append(example['refs'])
+        hyp_list.append(example['hyps'])
+    print(len(ref_list))
+    
+    results = get_f1(ref_list, hyp_list)
+    print(results)
+    return results
 
 if __name__ == "__main__":
     refs = [
