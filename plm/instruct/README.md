@@ -11,5 +11,6 @@ pip install -r requirements.txt
 - FLAN-T5-bese-FULL: 6.18%, 38.19%
 - T511-base-FULL: 4.61%, 35.24%
 - LONG-T5-base-FULL (1024): 5.03%, 36.11%
+- LONG-T5-base-FULL (2048): 9.28%, 45.65%
+- LONG-T5-base-FULL (4096): 
 
-{'macro': {'f1': 0.0503, 'precision': 0.0691, 'recall': 0.0514}, 'micro': {'f1': 0.3611, 'precision': 0.4849, 'recall': 0.2877}}
