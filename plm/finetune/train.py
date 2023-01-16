@@ -47,14 +47,16 @@ def main(modelname, dataset, maxlen, batchsize, learnrate, epoch):
     if dataset == "full":
         label_list = LABEL_LIST_FULL
         json_path = "exp/mimic3_full.json"
+        cache_dir = "exp/cache_full"
     else:
         label_list = LABEL_LIST_50
         json_path = "exp/mimic3_50.json"
+        cache_dir = "exp/cache"
 
     print("Loading dataset...")
-    train_set = load_dataset("json", data_files=json_path, cache_dir="exp/cache", field="train")
+    train_set = load_dataset("json", data_files=json_path, cache_dir=cache_dir, field="train")
     train_set = train_set['train']
-    test_set = load_dataset("json", data_files=json_path, cache_dir="exp/cache", field="test")
+    test_set = load_dataset("json", data_files=json_path, cache_dir=cache_dir, field="test")
     test_set = test_set['train']
 
     print("Prepare tokenizer and tokenized dataset...")
@@ -99,6 +101,7 @@ def main(modelname, dataset, maxlen, batchsize, learnrate, epoch):
     )
     trainer.train()
     trainer.save_model()
+    tokenizer.save_pretrained(f"exp/{modelname}_{dataset}")
 
     eval_metrics = trainer.evaluate()
     print("------- Eval Metrics -------")
