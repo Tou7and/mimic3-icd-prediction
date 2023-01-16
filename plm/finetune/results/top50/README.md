@@ -1,7 +1,4 @@
-# Results
-
-
-# MIMIC3-50
+# Results on MIMIC3-50
 Use mimic3-50 for quick experiments. <br>
 ```
 (Fix epoch to 10)
@@ -39,9 +36,3 @@ python train.py whaleloops/keptlongformer --epoch 10 --maxlen 4096 --batchsize 2
 "eval_runtime": 138.3993,
 "step": 20170
 ```
-
-# MIMIC3-FULL
-Select only a few settings from results on 50 since mimic3-full will be more resource consuming.
-
-
-

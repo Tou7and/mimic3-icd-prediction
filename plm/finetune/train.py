@@ -36,7 +36,7 @@ logging.set_verbosity_warning()
 def compute_metrics(p: EvalPrediction):
     """ Compute Micro and Macro-F1 """
     logits = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
-    preds = (expit(logits) > 0.5).astype('int32')
+    preds = (expit(logits) > 0.1).astype('int32') # 0.5 >> 0.1
     macro_f1 = f1_score(y_true=p.label_ids, y_pred=preds, average='macro', zero_division=0)
     micro_f1 = f1_score(y_true=p.label_ids, y_pred=preds, average='micro', zero_division=0)
     return {'macro-f1': macro_f1, 'micro-f1': micro_f1}
@@ -85,6 +85,7 @@ def main(modelname, dataset, maxlen, batchsize, learnrate, epoch):
         output_dir=f"exp/{modelname}_{dataset}",
         per_device_train_batch_size=batchsize, # 2-16
         per_device_eval_batch_size=batchsize, # 2-16
+        gradient_accumulation_steps=6,
         learning_rate=learnrate,
         num_train_epochs=epoch, # 2-10
         evaluation_strategy="epoch",
