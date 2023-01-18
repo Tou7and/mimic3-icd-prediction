@@ -12,5 +12,6 @@ pip install -r requirements.txt
 - T511-base-FULL: 4.61%, 35.24%
 - LONG-T5-base-FULL (1024): 5.03%, 36.11%
 - LONG-T5-base-FULL (2048): 9.28%, 45.65%
-- LONG-T5-base-FULL (4096): 
+- LONG-T5-base-FULL (4096): 1.19%, 20.61%
+    - only train 3 epochs via gradient checkponining
 

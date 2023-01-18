@@ -15,7 +15,8 @@
 # https://huggingface.co/google/long-t5-tglobal-base
 # https://huggingface.co/google/long-t5-local-base
 # global better than local?
-python train.py google/long-t5-tglobal-base --dataset full --epoch 10 --maxlen 2048
+python train.py google/long-t5-tglobal-base --dataset full --epoch 3 --maxlen 4096 --batch 2 --accumulate 4
+# python train.py google/long-t5-tglobal-base --dataset full --epoch 10 --maxlen 2048
 # python train.py google/long-t5-tglobal-base --dataset full --epoch 10 --maxlen 1024
 # python train_long.py google/long-t5-tglobal-base --dataset full --epoch 10 --maxlen 1024
 

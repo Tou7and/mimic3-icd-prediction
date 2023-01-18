@@ -15,7 +15,7 @@ from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
 nltk.download("punkt")
 metric = evaluate.load("rouge")
 
-def main(model_id, dataset, maxlen, n_epoch):
+def main(model_id, dataset, maxlen, n_epoch, n_batch, n_accumulate):
     """
     model_id: "google/flan-t5-base"
     dataset: "50" or "full"
@@ -104,8 +104,10 @@ def main(model_id, dataset, maxlen, n_epoch):
     # Define training args
     training_args = Seq2SeqTrainingArguments(
         output_dir=f"exp/{model_id}_{dataset}",
-        per_device_train_batch_size=1, # 3 --> 1
-        per_device_eval_batch_size=1, # 3 --> 1
+        gradient_accumulation_steps=n_accumulate,
+        gradient_checkpointing=False, # True
+        per_device_train_batch_size=n_batch, # 3 --> 1
+        per_device_eval_batch_size=n_batch, # 3 --> 1
         predict_with_generate=True,
         fp16=False, # Overflows with fp16
         learning_rate=5e-5,
@@ -142,7 +144,9 @@ if __name__ == "__main__":
     parser.add_argument('--dataset', nargs='?', default="50", type=str, help="50 or full")
     parser.add_argument('--maxlen', nargs='?', default=512, type=int, help="max token length")
     parser.add_argument('--epoch', nargs='?', default=10, type=int, help="number of epoch")
+    parser.add_argument('--batch', nargs='?', default=4, type=int, help="batch size")
+    parser.add_argument('--accumulate', nargs='?', default=4, type=int, help="accumulation steps")
     args = parser.parse_args()
-    print(args.modelname, args.dataset, args.maxlen, args.epoch)
+    print(args.modelname, args.dataset, args.maxlen, args.epoch, args.batch, args.accumulate)
     print("-"*100)
-    main(args.modelname, args.dataset, args.maxlen, args.epoch)
+    main(args.modelname, args.dataset, args.maxlen, args.epoch, args.batch, args.accumulate)

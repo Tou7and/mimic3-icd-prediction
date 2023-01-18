@@ -47,8 +47,8 @@ def main_full():
     print("loading model...")
     # model = FlanT5ICD("exp/google/flan-t5-base_full", "google/flan-t5-base_full")
     # model = T5ForICD("exp/google/t5-v1_1-base_full", "google/t5-v1_1-base")
-    model = LongT5ForICD("exp/google/long-t5-tglobal-base_full", "google/long-t5-tglobal-base")
-    output_dir = "exp/results_longt5base"
+    model = LongT5ForICD("exp/google/long-t5-tglobal-base_full_seq4k", "google/long-t5-tglobal-base")
+    output_dir = "exp/results_longt5base_4k"
     output_path = os.path.join(output_dir, "test_full.json")
     os.makedirs(output_dir, exist_ok=True)
 
